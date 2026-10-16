@@ -1,15 +1,15 @@
 # Claude Architect Foundations
 
-Claude Certified Architect – Foundations çalışma notları, tek sayfalık bir web sitesi olarak yayımlanır.
+Claude Certified Architect – Foundations study notes, published as a single-page website.
 
-## Güncelleme
+## Updating the site
 
-Değişiklikleri `index.html` dosyasında yaptıktan sonra:
+After editing `index.html`, run:
 
 ```powershell
 git add index.html
-git commit -m "Notları güncelle"
+git commit -m "Update study notes"
 git push
 ```
 
-GitHub Pages, `main` dalına gönderilen son sürümü otomatik olarak yayımlar.
+GitHub Pages automatically publishes the latest version pushed to the `main` branch.
