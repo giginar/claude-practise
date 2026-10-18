@@ -204,9 +204,12 @@ code {
   .major-body { padding-left:10px; padding-right:10px; }
 }
 
-.exam1-heading{
-  color:#ffb86b;
+.exam1-section{
   margin-top:46px;
+}
+.exam1-section > summary{
+  color:#ffb86b;
+  background:rgba(255,184,107,.08);
 }
 .exam1-intro{
   margin:0 0 18px;
@@ -515,7 +518,9 @@ code {
 <div class="regular-line">For debugging complex issues (e.g., intermittent HTTP 500 errors), dynamically generate investigation subtasks based on findings from each exploration step. Follow the actual execution path through routing, middleware, business logic, and database layers instead of assigning fixed parallel investigations before understanding the problem.</div>
 </div></details>
 
-<h2 class="section-heading exam1-heading">Exam 1</h2>
+<details class="major exam1-section" open>
+<summary>Exam 1</summary>
+<div class="major-body">
 <div class="exam1-intro">
 Key lessons from the mistakes in the first practice exam. Each note focuses on the idea that would help identify the correct answer next time.
 </div>
@@ -542,6 +547,8 @@ Key lessons from the mistakes in the first practice exam. Each note focuses on t
 <div class="exam1-card"><div class="exam1-card-title">20. Test a New Prompt Before a Huge Batch</div><div class="exam1-card-text">A brand-new prompt should be tested synchronously on a representative sample before running it across thousands of files. This catches prompt-level problems before you pay for a large batch whose results may all be weak. custom_id resubmission is useful for scattered failures in an already-tested pipeline, not for validating an untested prompt.</div></div>
 <div class="exam1-card"><div class="exam1-card-title">21. Resumed Sessions Can Contain Stale File Knowledge</div><div class="exam1-card-text">If files changed after a session was paused, do not trust the old analysis blindly. Either resume and explicitly make Claude re-read the changed files, or start a new session seeded with a structured summary of the earlier conclusions. The important idea is to refresh stale context before continuing.</div></div>
 </div>
+</div>
+</details>
 
 </div>
 </body>
