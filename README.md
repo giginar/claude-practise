@@ -2,6 +2,10 @@
 
 Claude Certified Architect – Foundations study notes, published as a single-page website.
 
+## Live site
+
+[Open the study notes](https://giginar.github.io/claude-practise/)
+
 ## Updating the site
 
 After editing `index.html`, run:
