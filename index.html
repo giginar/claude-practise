@@ -77,7 +77,6 @@ button:hover { filter:brightness(1.12); }
   letter-spacing:-.025em;
 }
 .cheat-heading { color:var(--gold); }
-.quiz-heading { color:var(--quiz); }
 
 details {
   border:1px solid var(--border);
@@ -456,7 +455,9 @@ code {
 <div class="rule-card">R4: Stratified Metrics: Track accuracy per document type. Aggregate metrics can mask critical per-category failures.</div>
 <div class="rule-card">R5: when system have conflict information (for example: from subagents): verified &gt; extracted &gt; inferred &gt; estimated. Always log the conflict.</div>
 </div></details>
-<h2 class="section-heading quiz-heading">Quizes</h2>
+<details class="major domain-quiz" open>
+<summary>Quizzes</summary>
+<div class="major-body">
 <details class="topic quiz-topic" open><summary>1. PreToolUse Hooks – Regex Matching</summary><div class="topic-body">
 <div class="regular-line">Regex matchers without anchors (e.g., /refund/) match any tool name containing the substring, including issue_refund_note. Use ^ and $ for exact matching (/^refund$/) or a literal matcher (refund) to target only the intended tool.</div>
 </div></details>
@@ -517,6 +518,8 @@ code {
 <details class="topic quiz-topic" open><summary>20. Code Exploration – Dynamic Task Decomposition</summary><div class="topic-body">
 <div class="regular-line">For debugging complex issues (e.g., intermittent HTTP 500 errors), dynamically generate investigation subtasks based on findings from each exploration step. Follow the actual execution path through routing, middleware, business logic, and database layers instead of assigning fixed parallel investigations before understanding the problem.</div>
 </div></details>
+</div>
+</details>
 
 <details class="major exam1-section" open>
 <summary>Exam 1</summary>
