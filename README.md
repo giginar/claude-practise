@@ -1,12 +1,12 @@
-# Claude Architect Foundations
+# Claude Certified Architect – Foundations
 
-Claude Certified Architect – Foundations study notes, published as a single-page website.
+Study notes for the Claude Certified Architect – Foundations (CCAR-F) exam, published as a single-page website. The page includes expandable topic summaries, exam tips, anti-patterns, cheat sheets, quizzes, and practice-exam lessons.
 
 ## Live site
 
 [Open the study notes](https://giginar.github.io/claude-practise/)
 
-## Updating the site
+## Update the site
 
 After editing `index.html`, run:
 

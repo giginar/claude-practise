@@ -28,11 +28,15 @@
 
   --valid-bg:#1d2936;
   --valid-border:#6fb1ff;
+  --shadow:0 16px 40px rgba(0,0,0,.22);
 }
 * { box-sizing:border-box; }
 body {
   margin:0;
-  background:var(--bg);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(173,130,255,.10), transparent 28rem),
+    radial-gradient(circle at 88% 12%, rgba(85,222,198,.07), transparent 24rem),
+    var(--bg);
   color:var(--text);
   font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height:1.58;
@@ -43,11 +47,25 @@ body {
   padding:30px 0 68px;
 }
 h1 {
-  margin:0 0 24px;
+  margin:0 0 10px;
   color:#fff;
   font-size:clamp(2rem, 4vw, 3.35rem);
   line-height:1.05;
   letter-spacing:-.035em;
+}
+.eyebrow {
+  margin:8px 0 10px;
+  color:var(--topic);
+  font-size:.78rem;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.lead {
+  max-width:760px;
+  margin:0 0 20px;
+  color:var(--muted);
+  font-size:1.04rem;
 }
 .toolbar {
   position:sticky;
@@ -67,7 +85,11 @@ button {
   font-weight:750;
   cursor:pointer;
 }
-button:hover { filter:brightness(1.12); }
+button:hover { filter:brightness(1.12); transform:translateY(-1px); }
+button:focus-visible, summary:focus-visible {
+  outline:3px solid rgba(111,177,255,.55);
+  outline-offset:3px;
+}
 
 .section-heading {
   margin:42px 0 16px;
@@ -83,9 +105,23 @@ details {
   border-radius:14px;
   overflow:hidden;
 }
+summary {
+  list-style:none;
+}
+summary::-webkit-details-marker { display:none; }
+summary::after {
+  content:"+";
+  float:right;
+  margin-left:14px;
+  color:currentColor;
+  font-size:1.12em;
+  line-height:1;
+}
+details[open] > summary::after { content:"−"; }
 .major {
   margin:14px 0;
   background:var(--panel);
+  box-shadow:var(--shadow);
 }
 .major > summary {
   cursor:pointer;
@@ -113,6 +149,7 @@ details {
   background:var(--panel2);
   border-color:#3a455e;
 }
+.topic[open] { border-color:#4a5876; }
 .topic > summary {
   cursor:pointer;
   user-select:none;
@@ -132,10 +169,26 @@ details {
   border-left:4px solid var(--qa-border);
   border-radius:9px;
 }
+.qa-card:hover, .rule-card:hover, .exam1-card:hover {
+  border-color:#53617e;
+  transform:translateY(-1px);
+}
 .question-text {
   color:#fff;
   font-weight:850;
   margin-bottom:5px;
+}
+.question-text::before {
+  content:"Q";
+  display:inline-grid;
+  place-items:center;
+  width:1.55rem;
+  height:1.55rem;
+  margin-right:.55rem;
+  border-radius:50%;
+  background:rgba(111,177,255,.15);
+  color:var(--quiz);
+  font-size:.76rem;
 }
 .answer-text {
   color:#f1f3f7;
@@ -165,6 +218,15 @@ details {
   border-radius:9px;
   color:#fff;
 }
+.callout-label {
+  display:inline-block;
+  margin-right:.35rem;
+  font-weight:900;
+  letter-spacing:.015em;
+}
+.examtip-card .callout-label { color:var(--tip-border); }
+.antipattern-card .callout-label { color:var(--anti-border); }
+.valid-card .callout-label { color:var(--valid-border); }
 
 .callout.valid-card {
   margin:12px 0;
@@ -177,6 +239,7 @@ details {
   margin:10px 0;
   color:#f1f3f7;
 }
+.regular-line strong { color:#fff; }
 .golden-label {
   margin:13px 0 9px;
   color:var(--gold);
@@ -189,6 +252,7 @@ details {
   border-left:3px solid var(--gold);
   border-radius:7px;
 }
+.rule-card strong { color:var(--gold); }
 code {
   background:#0b0d12;
   border:1px solid #2c3240;
@@ -196,11 +260,13 @@ code {
   padding:1px 5px;
   font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size:.93em;
+  overflow-wrap:anywhere;
 }
 @media (max-width:700px) {
   .wrap { width:calc(100% - 20px); padding-top:22px; }
   .major > summary { font-size:1.2rem; }
   .major-body { padding-left:10px; padding-right:10px; }
+  .toolbar { flex-wrap:wrap; }
 }
 
 .exam1-section{
@@ -225,6 +291,7 @@ code {
   border-left:4px solid #ffb86b;
   border-radius:10px;
   padding:13px 15px 14px;
+  transition:transform .15s ease, border-color .15s ease;
 }
 .exam1-card-title{
   color:#fff;
@@ -245,215 +312,215 @@ code {
     <button onclick="document.querySelectorAll('details').forEach(d => d.open = true)">Expand all</button>
     <button onclick="document.querySelectorAll('details').forEach(d => d.open = false)">Collapse all</button>
   </div>
-  <h1>Claude Certified Architect – Foundations (CCAR-F) Exam Notes</h1>
+  <div class="eyebrow">Study Guide · CCAR-F</div>
+  <h1>Claude Certified Architect – Foundations Exam Notes</h1>
+  <p class="lead">Concise review notes, exam tips, anti-patterns, cheat sheets, and practice-exam lessons for the CCAR-F exam.</p>
 <details class="major domain-main" open><summary>Domain 1: Agentic Architecture &amp; Orchestration</summary><div class="major-body">
 <details class="topic" open><summary>Agentic Loop and Core API</summary><div class="topic-body">
-<div class="qa-card"><div class="question-text">What is the only reliable signal to terminate an agentic loop?</div><div class="answer-text"><div class="answer-line">Checking if the stop reason form the API is exactly “end turn”</div></div></div>
-<div class="qa-card"><div class="question-text">What two things must be appended after each tool call?</div><div class="answer-text"><div class="answer-line">You have the appended original assistant message and the brand-new user message that holds the result from that tool.</div></div></div>
-<div class="regular-line">The exam’s most common trap: parsing text! The answer is always “stop_reason”.</div>
+<div class="qa-card"><div class="question-text">What is the only reliable signal for terminating an agentic loop?</div><div class="answer-text"><div class="answer-line">Check whether the API’s <code>stop_reason</code> is exactly <code>end_turn</code>.</div></div></div>
+<div class="qa-card"><div class="question-text">What two things must be appended after each tool call?</div><div class="answer-text"><div class="answer-line">Append both the original assistant message and a new user message containing the tool result.</div></div></div>
+<div class="regular-line"><strong>Common exam trap:</strong> parsing text. Always check <code>stop_reason</code>.</div>
 </div></details>
-<details class="topic" open><summary>Multi Agent Orchestration</summary><div class="topic-body">
-<div class="qa-card"><div class="question-text">If you want a coordinator to spawn subagents what allowedTools must be included?</div><div class="answer-text"><div class="answer-line">The ‘task’ tool.</div></div></div>
-<div class="qa-card"><div class="question-text">How do you run two agents at the same time?</div><div class="answer-text"><div class="answer-line">You make sure both of the task_tools calls are omitted from the single response from the coordinator.</div></div></div>
+<details class="topic" open><summary>Multi-Agent Orchestration</summary><div class="topic-body">
+<div class="qa-card"><div class="question-text">If you want a coordinator to spawn subagents, which tool must be included in <code>allowedTools</code>?</div><div class="answer-text"><div class="answer-line">The <code>task</code> tool.</div></div></div>
+<div class="qa-card"><div class="question-text">How do you run two agents at the same time?</div><div class="answer-text"><div class="answer-line">Include both <code>task</code> tool calls in a single response from the coordinator.</div></div></div>
 <div class="qa-card"><div class="question-text">What is the only context that a subagent should receive?</div><div class="answer-text"><div class="answer-line">Only the context specific to its assigned subtask.</div></div></div>
-<div class="qa-card"><div class="question-text">You have a new subagent to test, but you don’t want to risk messing up your main conversation, what to use?</div><div class="answer-text"><div class="answer-line">fork_session</div></div></div>
+<div class="qa-card"><div class="question-text">You have a new subagent to test, but you do not want to disrupt your main conversation. What should you use?</div><div class="answer-text"><div class="answer-line"><code>fork_session</code></div></div></div>
 </div></details>
-<details class="topic" open><summary>Hooks Programatic Enforcements</summary><div class="topic-body">
+<details class="topic" open><summary>Hooks and Programmatic Enforcement</summary><div class="topic-body">
 <div class="regular-line">If a rule must be enforced 100%, use a hook. Prompt enforcement is always wrong.</div>
-<div class="qa-card"><div class="question-text">Which of your rules are too critical to be left to a prompt?</div><div class="answer-text"><div class="answer-line">The answered rules needs a deterministic hook.</div></div></div>
+<div class="qa-card"><div class="question-text">Which rules are too critical to be left to a prompt?</div><div class="answer-text"><div class="answer-line">Any must-enforce rule needs a deterministic hook.</div></div></div>
 </div></details>
 <details class="topic" open><summary>Session Management Workflows</summary><div class="topic-body">
-<div class="qa-card"><div class="question-text">Is the next step determined by the PLAN or the RESULT?</div><div class="answer-text"><div class="answer-line">PLAN -&gt; Chaining Prompt, RESULT -&gt; Dynamic Adaptive</div></div></div>
-<div class="qa-card"><div class="question-text">When to use fork_session vs —resume?</div><div class="answer-text"><div class="answer-line">fork_session: experimental sandbox(not effects main chat but inherits full history)</div><div class="answer-line">—resume: effects main chat, inherits full history.</div></div></div>
-<div class="qa-card"><div class="question-text">What is stale context and how do you migitate it?</div><div class="answer-text"><div class="answer-line">Stale Context: Data retrieved early in the session that may become outdated by the time it is used. Solution: re-fetch critical data immidiately BEFORE the action that uses it.</div></div></div>
+<div class="qa-card"><div class="question-text">Is the next step determined by the plan or the result?</div><div class="answer-text"><div class="answer-line"><strong>Plan → prompt chaining.</strong> <strong>Result → dynamic adaptation.</strong></div></div></div>
+<div class="qa-card"><div class="question-text">When should you use <code>fork_session</code> versus <code>--resume</code>?</div><div class="answer-text"><div class="answer-line"><code>fork_session</code>: an experimental sandbox that does not affect the main chat but inherits its full history.</div><div class="answer-line"><code>--resume</code>: continues the main chat and inherits its full history.</div></div></div>
+<div class="qa-card"><div class="question-text">What is stale context, and how do you mitigate it?</div><div class="answer-text"><div class="answer-line"><strong>Stale context:</strong> data retrieved early in a session that may be outdated by the time it is used. Re-fetch critical data immediately before the action that uses it.</div></div></div>
 </div></details>
 </div></details>
 <details class="major domain-main" open><summary>Domain 2: Tool Design &amp; MCP Integration</summary><div class="major-body">
 <details class="topic" open><summary>Tool Description Best Practices</summary><div class="topic-body">
-<div class="callout examtip-card">Exam Tip: The most detailed answer is always the right answer.</div>
-<div class="qa-card"><div class="question-text">What are 6 key things to make a great tool description?</div><div class="answer-text"><div class="answer-line">A Clear Purpose: 1 simple sentence what is this tool do,</div><div class="answer-line">Input specs: what are the exact types rules formats for the data,</div><div class="answer-line">Examples: show it how its done,</div><div class="answer-line">Edge cases: what happens empty or weird data</div><div class="answer-line">Tell it when not to use it,</div><div class="answer-line">Clear description of return value not for success only, but for a  not found situation too.</div></div></div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> The most detailed answer is always the right answer.</div>
+<div class="qa-card"><div class="question-text">What six elements make a strong tool description?</div><div class="answer-text"><div class="answer-line"><strong>Clear purpose:</strong> one simple sentence explaining what the tool does.</div><div class="answer-line"><strong>Input specifications:</strong> the exact types, rules, and data formats.</div><div class="answer-line"><strong>Examples:</strong> show how the tool is used.</div><div class="answer-line"><strong>Edge cases:</strong> explain what happens with empty or unusual data.</div><div class="answer-line"><strong>Usage boundaries:</strong> state when the tool should not be used.</div><div class="answer-line"><strong>Return values:</strong> clearly describe successful and no-result responses.</div></div></div>
 <div class="qa-card"><div class="question-text">Why does the detail matter in a tool description?</div><div class="answer-text"><div class="answer-line">Because Claude literally uses these descriptions to figure out what to do. Vague descriptions cause wrong selection, missed edge cases and unexpected behavior.</div></div></div>
-<div class="qa-card"><div class="question-text">What should you document about return values?</div><div class="answer-text"><div class="answer-line">Document both the successful result and the empty and no-result mean and super clear about empty result means not found not an error.</div></div></div>
+<div class="qa-card"><div class="question-text">What should you document about return values?</div><div class="answer-text"><div class="answer-line">Document successful and empty results, and clearly state that an empty result means “not found,” rather than an error.</div></div></div>
 </div></details>
 <details class="topic" open><summary>Structured Error Responses</summary><div class="topic-body">
-<div class="qa-card"><div class="question-text">What 4 fields must a structured error response must have?</div><div class="answer-text"><div class="answer-line">isError: boolean</div><div class="answer-line">ErrorCategory: string</div><div class="answer-line">isRetryable: boolean</div><div class="answer-line">Context: string</div></div></div>
+<div class="qa-card"><div class="question-text">Which four fields must a structured error response have?</div><div class="answer-text"><div class="answer-line"><code>isError: boolean</code></div><div class="answer-line"><code>errorCategory: string</code></div><div class="answer-line"><code>isRetryable: boolean</code></div><div class="answer-line"><code>context: string</code></div></div></div>
 <div class="qa-card"><div class="question-text">What is the single most important difference in the response for ‘access failure’ and ‘empty result’?</div><div class="answer-text"><div class="answer-line">isError flag, access failure is true.</div></div></div>
 <div class="qa-card"><div class="question-text">When is isRetryable true and false?</div><div class="answer-text"><div class="answer-line">True for temporary transient errors that can just fix themselves. Set it to false for permanent errors like a bad password.</div></div></div>
-<div class="callout examtip-card">Exam Tip: If the questions says ‘database is unavailable’ or ‘connection failed’; returning [] is always wrong, return isError: true.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> If the question says “database is unavailable” or “connection failed,” returning <code>[]</code> is always wrong. Return <code>isError: true</code>.</div>
 </div></details>
 <details class="topic" open><summary>Tool Distribution Selection</summary><div class="topic-body">
 <div class="qa-card"><div class="question-text">What is the magic number of tools for an agent?</div><div class="answer-text"><div class="answer-line">4-5. 6-10 is acceptable. More is confusing.</div></div></div>
 <div class="qa-card"><div class="question-text">How do you force a specific tool to be used?</div><div class="answer-text"><div class="answer-line">tool_choice option.</div></div></div>
-<div class="regular-line">“Auto”: model decides which tool to use, default, general purpose</div>
-<div class="regular-line">“Any”: model must use a tool, it chooses which, general tool invocation</div>
-<div class="regular-line">{“type”:”tool”,”name”:”X”} -Z you force the model for the exact tool.</div>
-<div class="callout examtip-card">Exam Tip: When exam shows 18 oops on one agent, the right answer is always ‘distribute across subagents’.</div>
+<div class="regular-line"><strong><code>auto</code>:</strong> the model decides whether and which tool to use; this is the general-purpose default.</div>
+<div class="regular-line"><strong><code>any</code>:</strong> the model must use a tool but chooses which one.</div>
+<div class="regular-line"><strong><code>{"type":"tool","name":"X"}</code>:</strong> forces the model to use the specified tool.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> When the exam shows 18 tools on one agent, the right answer is always “distribute them across subagents.”</div>
 </div></details>
 <details class="topic" open><summary>MCP Server Configuration</summary><div class="topic-body">
-<div class="regular-line"><strong>.mcp.json</strong> -&gt; project level scope, shared via git, purpose: team tools-project integration</div>
-<div class="regular-line"><strong>/.claude.json</strong> -&gt; user level scope, personel-not shared, purpose: individual credentials, personal tools</div>
+<div class="regular-line"><strong><code>.mcp.json</code>:</strong> project-level scope; shared through Git; used for team and project tool integrations.</div>
+<div class="regular-line"><strong><code>~/.claude.json</code>:</strong> user-level scope; personal and not shared; used for individual credentials and personal tools.</div>
 <div class="qa-card"><div class="question-text">What’s the biggest mistake you can make in .mcp.json?</div><div class="answer-text"><div class="answer-line">Hardcoded secrets are a major security risk. Use environment variables ( ${ENV_VAR} ) to securely load secrets at runtime.</div></div></div>
-<div class="callout examtip-card">Exam Tip: Any answer hardcoding API keys in .mcp.json is always wrong. Use ${ENV_VAR} syntax.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> Any answer that hardcodes API keys in <code>.mcp.json</code> is always wrong. Use <code>${ENV_VAR}</code> syntax.</div>
 </div></details>
-<details class="topic" open><summary>Builtin Tools</summary><div class="topic-body">
-<div class="regular-line">Six builtin tools:</div>
-<div class="regular-line">read: read file contents;  use case: config files, code review</div>
-<div class="regular-line">Write: create new files from starch; new files only, replaces existing files</div>
-<div class="regular-line">Edit: modify existing files; targeted bug fixes, feature additions</div>
-<div class="regular-line">Bash: execute shell commands; npm test, built systems, installs</div>
-<div class="regular-line">Grep: search inside files for text; find all usages of a function</div>
-<div class="regular-line">Glob: files based on their name pattern; find all *.text files</div>
-<div class="callout examtip-card">Exam Tip: The exam often shows Bash(“cat file.txt) or Bash (Grep -r ….). Correct answer replaces these with Read() and Grep()</div>
-<div class="qa-card"><div class="question-text">When is Bash the tool choice?</div><div class="answer-text"><div class="answer-line">- Execution</div></div></div>
+<details class="topic" open><summary>Built-in Tools</summary><div class="topic-body">
+<div class="regular-line"><strong>Six built-in tools:</strong></div>
+<div class="regular-line"><strong>Read:</strong> read file contents; use for configuration files and code review.</div>
+<div class="regular-line"><strong>Write:</strong> create new files from scratch or replace existing files.</div>
+<div class="regular-line"><strong>Edit:</strong> modify existing files; use for targeted bug fixes and feature additions.</div>
+<div class="regular-line"><strong>Bash:</strong> execute shell commands; use for tests, build systems, and installs.</div>
+<div class="regular-line"><strong>Grep:</strong> search inside files; use to find all usages of a function.</div>
+<div class="regular-line"><strong>Glob:</strong> find files by name pattern, such as <code>*.txt</code>.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> The exam often shows <code>Bash("cat file.txt")</code> or <code>Bash("grep -r …")</code>. The correct answer replaces these with <code>Read()</code> and <code>Grep()</code>.</div>
+<div class="qa-card"><div class="question-text">When is Bash the right tool?</div><div class="answer-text"><div class="answer-line">When command execution is required.</div></div></div>
 <div class="qa-card"><div class="question-text">Is there a specific built-in tool design for the exact operation?</div><div class="answer-text"><div class="answer-line">If yes, use it. If not, then maybe it’s Bash.</div></div></div>
 </div></details>
 </div></details>
 <details class="major domain-main" open><summary>Domain 3: Claude Code Configuration &amp; Workflows</summary><div class="major-body">
-<details class="topic" open><summary>Claude MD Hierarchy</summary><div class="topic-body">
-<div class="regular-line"><strong>User Level</strong> -&gt; ~/.claude/CLAUDE.md; <strong>not</strong> in git; personal keybindings or favorite color layout</div>
-<div class="regular-line"><strong>Project</strong> -&gt; .claude/CLAUDE.MD; in git; typescript rules</div>
-<div class="regular-line"><strong>Directory</strong> -&gt; src/api/CLAUDE.MD; module scoped; API Auth rules</div>
-<div class="regular-line">A rule defined in specific directory always overrides a more general project rule.</div>
-<div class="regular-line"><strong>@import</strong> directive -&gt; includes external md files for modular config. Keeps files focused and maintainable. Important for Modularity for clean, logical, manageble pieces.</div>
-<div class="callout antipattern-card"><strong>AntiPattern</strong> -&gt; A massive MD file or mixing personal preferences into a shared config.</div>
+<details class="topic" open><summary>CLAUDE.md Hierarchy</summary><div class="topic-body">
+<div class="regular-line"><strong>User level:</strong> <code>~/.claude/CLAUDE.md</code>; not stored in Git; used for personal preferences.</div>
+<div class="regular-line"><strong>Project level:</strong> <code>.claude/CLAUDE.md</code>; stored in Git; used for shared project rules.</div>
+<div class="regular-line"><strong>Directory level:</strong> <code>src/api/CLAUDE.md</code>; module-scoped; used for rules such as API authentication conventions.</div>
+<div class="regular-line">A rule defined in a specific directory overrides a more general project rule.</div>
+<div class="regular-line"><strong><code>@import</code> directive:</strong> includes external Markdown files for modular configuration, keeping files focused, logical, and maintainable.</div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> Using one massive Markdown file or mixing personal preferences into shared configuration.</div>
 </div></details>
 <details class="topic" open><summary>Custom Command Skills</summary><div class="topic-body">
-<div class="regular-line">Commands: quick and dirty shortcuts. Runs in current session, tool access can not be restricted. Location: .claude/command/*.md</div>
-<div class="regular-line">Skills: orchestration complex, multistep behaviors. Con fork context, toll accesss can be restricted. Location: .claude/skills/name/SKILL.md</div>
-<div class="regular-line">SKILL.md -&gt; context: fork -&gt; creates isolated execution environment, preventing pollution of the main session, allowed_tools: […] -&gt; restricts the skill to a specific list of tools, preventing accidental operations.</div>
-<div class="callout antipattern-card">AntiPattern -&gt; create a powerful skill, but forget to add allowed_tools, this gives the skill wide permissions, avoid it!</div>
-<div class="callout examtip-card">Exam Tip: Task needs isolation or tool restriction use ‘SKILL’. If it is a simple shortcut, use ‘command’.</div>
+<div class="regular-line"><strong>Commands:</strong> quick shortcuts that run in the current session. Tool access cannot be restricted. Location: <code>.claude/commands/*.md</code>.</div>
+<div class="regular-line"><strong>Skills:</strong> orchestration for complex, multi-step behaviors. With a forked context, tool access can be restricted. Location: <code>.claude/skills/name/SKILL.md</code>.</div>
+<div class="regular-line"><strong><code>SKILL.md</code>:</strong> <code>context: fork</code> creates an isolated execution environment and prevents pollution of the main session. <code>allowed-tools: […]</code> restricts the skill to a specific set of tools.</div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> Creating a powerful skill without <code>allowed-tools</code>, which gives the skill broad permissions.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> If a task needs isolation or tool restrictions, use a <strong>skill</strong>. For a simple shortcut, use a <strong>command</strong>.</div>
 </div></details>
 <details class="topic" open><summary>Plan Mode Iterative Refinement</summary><div class="topic-body">
-<div class="regular-line">Plan Mode -&gt; When to use: Multi file architecture, unknown scope, expensive to undo; Behavior -&gt; Outlines approach before executing</div>
-<div class="regular-line">Direct Execution Mode -&gt; When to use: Simple well defined, single file tasks; Behavior -&gt; Executes immediately, no overhead</div>
-<div class="regular-line">TDD (preferred refinement pattern)-&gt; 1. Write test -&gt; 2. Run(fails) -&gt; 3. Implement -&gt; 4. Run(passes) -&gt; 5. Refine</div>
-<div class="callout antipattern-card">AntiPattern -&gt; Plan mode for simple tasks, Direct execution for multi-file architectural changes, vague refinement feedback such as “make it better”</div>
+<div class="regular-line"><strong>Plan Mode:</strong> use for multi-file architecture, unknown scope, or changes that are expensive to undo. It outlines the approach before execution.</div>
+<div class="regular-line"><strong>Direct Execution Mode:</strong> use for simple, well-defined, single-file tasks. It executes immediately without planning overhead.</div>
+<div class="regular-line"><strong>TDD, the preferred refinement pattern:</strong> 1. Write a test → 2. Run it and see it fail → 3. Implement → 4. Run it and see it pass → 5. Refine.</div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> Using Plan Mode for simple tasks, using direct execution for multi-file architectural changes, or giving vague feedback such as “make it better.”</div>
 </div></details>
-<details class="topic" open><summary>CICD Batch Processing</summary><div class="topic-body">
-<div class="regular-line">-p -&gt; purpose: non interactive mode; Exam note: always required for CICD</div>
-<div class="regular-line">—output-format json -&gt;  purpose: structured json output; Exam note: for automated downstream processing</div>
-<div class="regular-line">—json-schema -&gt; purpose: enforce output json shape; Exam note: guaranteed specific json structure</div>
-<div class="callout antipattern-card">AntiPattern: In the same session, where code generated, making a review will create a confirmation bias.</div>
-<div class="regular-line">Synchronous API: Immediate, cost is normal, use case: blocking PR review, real-time feedback</div>
-<div class="regular-line">Message Batch API: within 24h, cost Is %50 saved, use case: nightly audits, weekly scans</div>
+<details class="topic" open><summary>CI/CD Batch Processing</summary><div class="topic-body">
+<div class="regular-line"><strong><code>-p</code>:</strong> enables non-interactive mode; always required for CI/CD.</div>
+<div class="regular-line"><strong><code>--output-format json</code>:</strong> produces structured JSON output for automated downstream processing.</div>
+<div class="regular-line"><strong><code>--json-schema</code>:</strong> enforces a specific JSON output shape.</div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> Reviewing generated code in the same session, which can create confirmation bias.</div>
+<div class="regular-line"><strong>Synchronous API:</strong> immediate response at the standard cost; use for blocking PR reviews and real-time feedback.</div>
+<div class="regular-line"><strong>Message Batches API:</strong> results within 24 hours at 50% lower cost; use for nightly audits and weekly scans.</div>
 </div></details>
 </div></details>
 <details class="major domain-main" open><summary>Domain 4: Prompt Engineering &amp; Structured Output</summary><div class="major-body">
 <details class="topic" open><summary>Explicit Criteria Instruction Design</summary><div class="topic-body">
-<div class="callout antipattern-card">AntiPattern: “Be thorough and find all issues” - no scope, no boundary; “improve the code” - improve how? No measurable success criteria.</div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> “Be thorough and find all issues” has no scope or boundary. “Improve the code” has no measurable success criteria.</div>
 <div class="regular-line">The difference between a vague prompt and an explicit one is clarity and control.</div>
 <div class="regular-line">The correct criteria prompt will always be scoped, specific, structured and measurable with something like a control checklist.</div>
 <div class="qa-card"><div class="question-text">What is “alert fatigue”?</div><div class="answer-text"><div class="answer-line">Too many false positives cause developers to ignore all flags, including the real ones.</div></div></div>
-<div class="qa-card"><div class="question-text">What is the benefit of explicit criteria?</div><div class="answer-text"><div class="answer-line">It is all about getting consistent, automatable results with a low rate of false positives, which builds developers trust.</div></div></div>
+<div class="qa-card"><div class="question-text">What is the benefit of explicit criteria?</div><div class="answer-text"><div class="answer-line">They produce consistent, automatable results with a low false-positive rate, which builds developers’ trust.</div></div></div>
 </div></details>
-<details class="topic" open><summary>Few Shot Prompting</summary><div class="topic-body">
+<details class="topic" open><summary>Few-Shot Prompting</summary><div class="topic-body">
 <div class="qa-card"><div class="question-text">Why is few-shot prompting important?</div><div class="answer-text"><div class="answer-line">Providing examples in the prompt to teach the model a specific task, format or style.</div></div></div>
-<div class="qa-card"><div class="question-text">How many examples?</div><div class="answer-text"><div class="answer-line">0 -&gt; zero shots: simple, objective tasks.</div><div class="answer-line">2-4 -&gt; OPTIMAL: ambiguous, custom formats</div><div class="answer-line">5-6 -&gt; Acceptable: complex edge cases</div><div class="answer-line">7+ -&gt; Diminishing: bloats prompt &amp; cost, avoid.</div></div></div>
-<div class="regular-line">Examples should have exact same format(json etc..), category diversity, edge case coverage (at least 1 edge example)</div>
-<div class="qa-card"><div class="question-text">When is the few-shot most valuable and it shines?</div><div class="answer-text"><div class="answer-line">Ambiguity or when you need a specific output format, anytime lines between the categories are fuzy.</div></div></div>
+<div class="qa-card"><div class="question-text">How many examples should you use?</div><div class="answer-text"><div class="answer-line"><strong>0:</strong> zero-shot prompting for simple, objective tasks.</div><div class="answer-line"><strong>2–4:</strong> optimal for ambiguity and custom formats.</div><div class="answer-line"><strong>5–6:</strong> acceptable for complex edge cases.</div><div class="answer-line"><strong>7+:</strong> diminishing returns; bloats the prompt and increases cost.</div></div></div>
+<div class="regular-line">Examples should use the exact same format, cover diverse categories, and include at least one edge case.</div>
+<div class="qa-card"><div class="question-text">When is few-shot prompting most valuable?</div><div class="answer-text"><div class="answer-line">When a task is ambiguous, requires a specific output format, or has fuzzy boundaries between categories.</div></div></div>
 </div></details>
 <details class="topic" open><summary>Structured Output Tool Use</summary><div class="topic-body">
-<div class="qa-card"><div class="question-text">What does tool_use actually guarantee?</div><div class="answer-text"><div class="answer-line">All required fields present, correct types, valid enums. I does not guarantee the values, dates, totals inside.</div></div></div>
+<div class="qa-card"><div class="question-text">What does <code>tool_use</code> actually guarantee?</div><div class="answer-text"><div class="answer-line">It guarantees that all required fields are present and that types and enums are valid. It does not guarantee that the values, dates, or totals are correct.</div></div></div>
 <div class="regular-line">The key is forcing the tool call, then immediately validating the output.</div>
-<div class="callout antipattern-card">AntiPatterns: assuming tool_use does all the work, without checking the values, writing to db.</div>
-<div class="qa-card"><div class="question-text">Why is it a good idea to include “other” category in your schemas enums?</div><div class="answer-text"><div class="answer-line">It is a safety net, if something does not fit, it will go there, so hallucinating will be eliminated.</div></div></div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> Assuming <code>tool_use</code> does all the work, failing to validate values, and writing unchecked output to the database.</div>
+<div class="qa-card"><div class="question-text">Why is it useful to include an “other” category in a schema’s enums?</div><div class="answer-text"><div class="answer-line">It acts as a safety net: when a value does not fit the defined categories, the model can use “other” instead of inventing a category.</div></div></div>
 </div></details>
 <details class="topic" open><summary>Validation Retry Loops</summary><div class="topic-body">
 <div class="regular-line">An automated quality check process that validates output immediately and re-prompts the model with specific targeted feedback on errors.</div>
-<div class="callout antipattern-card">AntiPatterns: generic retry (there is an error, try again. Model needs to know what to fix); same session development and review; don’t look big picture accuracy number, there can be a failure in one specific area (receipts are always correct but maybe invoices are always wrong)</div>
-<div class="callout examtip-card">Exam Tip: Always retry with specific feedback, avoid same session review, use stratified metrics.</div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-patterns:</strong> Generic retries such as “There is an error; try again,” reviewing work in the development session, and relying only on aggregate accuracy when one category may be failing.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> Always retry with specific feedback, avoid same-session review, and use stratified metrics.</div>
 </div></details>
 </div></details>
 <details class="major domain-main" open><summary>Domain 5: Context Management &amp; Reliability</summary><div class="major-body">
 <details class="topic" open><summary>Context Optimization Positioning</summary><div class="topic-body">
-<div class="regular-line">Case Fact Patterns: immutable, structured reference block you place at the start of the context. never summarize the block, don’t compress it, and reference it directly in your prompts.</div>
-<div class="callout examtip-card">Exam Tip: Preserve critical details via case fact blocks. Progressive summarization always loses information. Case fact blocks = always correct.</div>
-<div class="qa-card"><div class="question-text">What is the progressive summarization risk?</div><div class="answer-text"><div class="answer-line">The risk is repeated compression ends up losing critical details, names, IDs, amounts; solution is immutable case fact blocks instead.</div></div></div>
-<div class="qa-card"><div class="question-text">What is “the loss in the middle” effect?</div><div class="answer-text"><div class="answer-line">Information stuck in the middle of the long context is least likely to be called by the model, because of that place the critical data at the start at the start like case facts or at the end like the current task.</div></div></div>
+<div class="regular-line"><strong>Case Fact Patterns:</strong> immutable, structured reference blocks placed at the start of the context. Never summarize or compress these blocks; reference them directly in prompts.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> Preserve critical details with case fact blocks. Progressive summarization always loses information. Case fact blocks are always the correct choice.</div>
+<div class="qa-card"><div class="question-text">What is the risk of progressive summarization?</div><div class="answer-text"><div class="answer-line">Repeated compression can lose critical details such as names, IDs, and amounts. Use immutable case fact blocks instead.</div></div></div>
+<div class="qa-card"><div class="question-text">What is the “lost in the middle” effect?</div><div class="answer-text"><div class="answer-line">Information in the middle of a long context is less likely to be recalled by the model. Place critical data at the beginning, as case facts, or at the end, as the current task.</div></div></div>
 <div class="regular-line">In system design, losing facts isn’t an error; it’s a failure. Architect for integrity.</div>
 </div></details>
 <details class="topic" open><summary>Escalation &amp; Error Propagation</summary><div class="topic-body">
-<div class="callout valid-card">VALID: customer explicitly requests a human. This is deterministic with no ambiguity. -&gt; trigger for human</div>
-<div class="callout valid-card">VALID: a policy gap exists. The agent cannot safely invent a new rule. -&gt; trigger for human review</div>
-<div class="callout valid-card">VALID: The task exceeds the agent’s capabilities. Its an out of scope requests -&gt; escalate</div>
-<div class="callout valid-card">VALID: if over $50 need human approval. Deterministic	-&gt; trigger for human escalation</div>
-<div class="callout antipattern-card">AntiPattern: amodels self-reported confidence report, it is just an internal report, the solution may be right.</div>
-<div class="callout examtip-card">Exam Tip: Sentiment-based and confident-based escalation are always wrong on the exam.</div>
-<div class="qa-card"><div class="question-text">What are 5 valid escalation triggers?</div><div class="answer-text"><div class="answer-line">An explicit customer request, a policy gap, the task exceeds the agent’s capabilities, a business trash hold met, repeated failures after recovery attempt.</div></div></div>
-<div class="qa-card"><div class="question-text">What are the big three anti-patterns?</div><div class="answer-text"><div class="answer-line">Negative customer sentiment, models self reported low confident, a long conversation duration</div></div></div>
-<div class="qa-card"><div class="question-text">What is the number one rule for error propagation?</div><div class="answer-text"><div class="answer-line">Never ever silently drop failures, you must always report what happened rich structured context so the system make an intelligence choice.</div></div></div>
+<div class="callout valid-card"><strong class="callout-label">Valid trigger:</strong> The customer explicitly requests a human. This is deterministic and unambiguous.</div>
+<div class="callout valid-card"><strong class="callout-label">Valid trigger:</strong> A policy gap exists, and the agent cannot safely invent a new rule.</div>
+<div class="callout valid-card"><strong class="callout-label">Valid trigger:</strong> The request is outside the agent’s capabilities.</div>
+<div class="callout valid-card"><strong class="callout-label">Valid trigger:</strong> Transactions over $50 require human approval.</div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> Escalating based on a model’s self-reported confidence. It is only an internal report, and the solution may still be correct.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> Sentiment-based and confidence-based escalation are always wrong on the exam.</div>
+<div class="qa-card"><div class="question-text">What are five valid escalation triggers?</div><div class="answer-text"><div class="answer-line">An explicit customer request, a policy gap, a task beyond the agent’s capabilities, a business threshold being met, or repeated failures after recovery attempts.</div></div></div>
+<div class="qa-card"><div class="question-text">What are the three main anti-patterns?</div><div class="answer-text"><div class="answer-line">Negative customer sentiment, a model’s self-reported low confidence, and a long conversation duration.</div></div></div>
+<div class="qa-card"><div class="question-text">What is the number-one rule for error propagation?</div><div class="answer-text"><div class="answer-line">Never silently drop failures. Always report what happened with rich, structured context so the system can make an informed choice.</div></div></div>
 </div></details>
-<details class="topic" open><summary>Context Degradation Extension Sessions</summary><div class="topic-body">
-<div class="regular-line">Context Degradation: Performance diminishes as conversation history grows, potentially losing track of critical informaiton.</div>
-<div class="regular-line">4 main solutions:</div>
-<div class="regular-line">/compact: compress conversation history to reclaim context space. When to use: context is getting long, but the task is not yet done.</div>
-<div class="regular-line">Strachpad files: persist critical state to external files that survive a reset. When to use: you’ve uncovered important intermediate findings.</div>
-<div class="regular-line">Subagent delegation: a subagent absorbs verbose “noise” from exploration. When to use: The main coordinator’s context needs to stay clean.</div>
-<div class="regular-line">Position-aware ordering: Places critical data at the start/end. Less important data in the middle. When to use: You are dealing with long contexts of mixed importance.</div>
-<div class="callout examtip-card">Exam Tip: Aggregate metrics mask failures. Always track per-category.</div>
+<details class="topic" open><summary>Context Degradation in Extended Sessions</summary><div class="topic-body">
+<div class="regular-line"><strong>Context degradation:</strong> performance diminishes as conversation history grows, potentially losing track of critical information.</div>
+<div class="regular-line"><strong>Four main solutions:</strong></div>
+<div class="regular-line"><strong><code>/compact</code>:</strong> compress conversation history to reclaim context space. Use it when the context is growing but the task is not finished.</div>
+<div class="regular-line"><strong>Scratchpad files:</strong> persist critical state in external files that survive a reset. Use them after uncovering important intermediate findings.</div>
+<div class="regular-line"><strong>Subagent delegation:</strong> let a subagent absorb verbose exploration noise when the main coordinator’s context must remain clean.</div>
+<div class="regular-line"><strong>Position-aware ordering:</strong> place critical data at the beginning or end and less important data in the middle when working with long contexts of mixed importance.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> Aggregate metrics mask failures. Always track results per category.</div>
 </div></details>
-<details class="topic" open><summary>Human Review Information Provenence</summary><div class="topic-body">
-<div class="qa-card"><div class="question-text">Source: where did the date come from?</div><div class="answer-text"><div class="answer-line">db, invoice</div></div></div>
-<div class="qa-card"><div class="question-text">Confidence: how reliable is this source?</div><div class="answer-text"><div class="answer-line">Verified Data -&gt; Extracted Data-&gt; Inferred Data-&gt; Estimated Data (confidence hierarchy)</div></div></div>
-<div class="qa-card"><div class="question-text">Retrieved_at: when was is fetched?</div><div class="answer-text"><div class="answer-line">Enables staleness detection</div></div></div>
-<div class="qa-card"><div class="question-text">Agent_id: which subagent provided it?</div><div class="answer-text"><div class="answer-line">Enables tracing conflicts</div></div></div>
-<div class="callout antipattern-card">AntiPattern: arbitrarily pick one, ignore the conflict -&gt; automatic wrong answer.</div>
-<div class="callout examtip-card">Exam Tip: When subagents conflict: always use provenance to resolve. “Just pick one” is always wrong.</div>
-<div class="regular-line">\
-<strong> Cheat Sheets</strong></div>
+<details class="topic" open><summary>Human Review Information Provenance</summary><div class="topic-body">
+<div class="qa-card"><div class="question-text">Source: where did the data come from?</div><div class="answer-text"><div class="answer-line">For example, a database or invoice.</div></div></div>
+<div class="qa-card"><div class="question-text">Confidence: how reliable is this source?</div><div class="answer-text"><div class="answer-line">Verified data → extracted data → inferred data → estimated data.</div></div></div>
+<div class="qa-card"><div class="question-text"><code>retrieved_at</code>: when was it fetched?</div><div class="answer-text"><div class="answer-line">Enables staleness detection.</div></div></div>
+<div class="qa-card"><div class="question-text"><code>agent_id</code>: which subagent provided it?</div><div class="answer-text"><div class="answer-line">Enables conflict tracing.</div></div></div>
+<div class="callout antipattern-card"><strong class="callout-label">Anti-pattern:</strong> Arbitrarily choosing one value and ignoring the conflict.</div>
+<div class="callout examtip-card"><strong class="callout-label">Exam Tip:</strong> When subagents conflict, always use provenance to resolve the conflict. “Just pick one” is always wrong.</div>
 </div></details>
 </div></details>
 
 <h2 class="section-heading cheat-heading">Cheat Sheets</h2>
-<details class="major domain-main" open><summary>Domain 1: Agentic Architecture &amp; Orchestration</summary><div class="major-body">
+<details class="major domain-cheat" open><summary>Domain 1: Agentic Architecture &amp; Orchestration</summary><div class="major-body">
 <div class="golden-label">The Golden Rules:</div>
-<div class="rule-card">R1: Check ‘stop_reason’ == ‘end_turn’. Never parse text.</div>
-<div class="rule-card">R2: For every single tool call, you have to append both the assistant message and tool_result every iteraion.</div>
-<div class="rule-card">R3: Hooks are for any must-enforce rules. Prompts are for style only.</div>
-<div class="rule-card">R4: Pass only relevant context to subagents.</div>
-<div class="rule-card">R5: Tools must include a task to spawn a subagent.</div>
-<div class="rule-card">R6: Multiple ‘task’ call == parallel execution</div>
-<div class="rule-card">R7: —resume to continue on main, fork_session to branch.</div>
-<div class="rule-card">R8: Prompt chaining for the fixed tasks, dynamic agents for unknown complexity.</div>
+<div class="rule-card"><strong>R1:</strong> Check <code>stop_reason == "end_turn"</code>. Never parse text.</div>
+<div class="rule-card"><strong>R2:</strong> For every tool call, append both the assistant message and <code>tool_result</code> on every iteration.</div>
+<div class="rule-card"><strong>R3:</strong> Hooks are for must-enforce rules. Prompts are for style.</div>
+<div class="rule-card"><strong>R4:</strong> Pass only relevant context to subagents.</div>
+<div class="rule-card"><strong>R5:</strong> The available tools must include <code>task</code> to spawn a subagent.</div>
+<div class="rule-card"><strong>R6:</strong> Multiple <code>task</code> calls in one response run in parallel.</div>
+<div class="rule-card"><strong>R7:</strong> Use <code>--resume</code> to continue the main session and <code>fork_session</code> to branch.</div>
+<div class="rule-card"><strong>R8:</strong> Use prompt chaining for fixed tasks and dynamic agents for unknown complexity.</div>
 </div></details>
-<details class="major domain-main" open><summary>Domain 2: Tool Design &amp; MCP Integration</summary><div class="major-body">
+<details class="major domain-cheat" open><summary>Domain 2: Tool Design &amp; MCP Integration</summary><div class="major-body">
 <div class="golden-label">The Golden Rules:</div>
-<div class="rule-card">R1: Your tool descriptions need purpose, input specs, examples and edge cases.</div>
-<div class="rule-card">R2: Use isError:true for a connectivity failure(DB down…). Never return an empty array, that is a success signal.</div>
-<div class="rule-card">R3: Proper error response is a structured object, needs to include these fields: isError, errorCategory, isRetryable, context.</div>
-<div class="rule-card">R4: The optimal number is 4-5 tools per agent. For more, distribute them across subagents.</div>
-<div class="rule-card">R5: Never ever hardcore your secrets. The secure method is using ${ENV_VAR} expansion in .mcp.json to handle secrets.</div>
-<div class="rule-card">R6: Write: new, edit: modify, grep: inside the files, glob: file names</div>
+<div class="rule-card"><strong>R1:</strong> Tool descriptions need a purpose, input specifications, examples, and edge cases.</div>
+<div class="rule-card"><strong>R2:</strong> Use <code>isError: true</code> for a connectivity failure, such as a database outage. Never return an empty array, which signals success.</div>
+<div class="rule-card"><strong>R3:</strong> A proper error response is a structured object containing <code>isError</code>, <code>errorCategory</code>, <code>isRetryable</code>, and <code>context</code>.</div>
+<div class="rule-card"><strong>R4:</strong> The optimal number is 4–5 tools per agent. Distribute additional tools across subagents.</div>
+<div class="rule-card"><strong>R5:</strong> Never hardcode secrets. Use <code>${ENV_VAR}</code> expansion in <code>.mcp.json</code>.</div>
+<div class="rule-card"><strong>R6:</strong> Write creates, Edit modifies, Grep searches file contents, and Glob searches file names.</div>
 </div></details>
-<details class="major domain-main" open><summary>Domain 3: Claude Code Configuration &amp; Workflows</summary><div class="major-body">
+<details class="major domain-cheat" open><summary>Domain 3: Claude Code Configuration &amp; Workflows</summary><div class="major-body">
 <div class="golden-label">The Golden Rules:</div>
-<div class="rule-card">R1: Config Layers -&gt; Personal=user, team/git=project, module-specific=directory. The directory layer has higher presedence.</div>
-<div class="rule-card">R2: Modular Configuration -&gt; use @import and the .claude/rules/ directory to split large configuration files.</div>
-<div class="rule-card">R3: skill: isolation/tool-restriction, use context:fork for safe sandbox; command: simple shortcut, for direct execution.</div>
-<div class="rule-card">R4: The context:fork argument: runs a skill in a completely isolated context, ensuring exploration and changes stay in the fork.</div>
-<div class="rule-card">R5: Plan mode: Use big complex, multi-file changes to review proposed actions before execution. Overkill for simple tasks.</div>
-<div class="rule-card">R6: The -p flag for CICD. Mandatory automation flag. Always use the -p flag for non-interactive environments like CICD pipelines.</div>
-<div class="rule-card">R7: Session Isolation: generate a session A and review in a separate session B. Never self-review to avoid confirmation bias.</div>
-<div class="rule-card">R8: The Batch AI: offers %50 savings for non-urgent tasks where a 24-hour latency is acceptable.</div>
+<div class="rule-card"><strong>R1:</strong> Configuration layers: personal = user, team/Git = project, and module-specific = directory. The directory layer has higher precedence.</div>
+<div class="rule-card"><strong>R2:</strong> Modular configuration: use <code>@import</code> and the <code>.claude/rules/</code> directory to split large configuration files.</div>
+<div class="rule-card"><strong>R3:</strong> Use a skill for isolation or tool restrictions and <code>context: fork</code> for a safe sandbox. Use a command for a simple shortcut.</div>
+<div class="rule-card"><strong>R4:</strong> <code>context: fork</code> runs a skill in an isolated context, keeping exploration and changes in the fork.</div>
+<div class="rule-card"><strong>R5:</strong> Use Plan Mode for large, complex, multi-file changes to review proposed actions before execution. It is excessive for simple tasks.</div>
+<div class="rule-card"><strong>R6:</strong> The <code>-p</code> flag is mandatory in non-interactive environments such as CI/CD pipelines.</div>
+<div class="rule-card"><strong>R7:</strong> Session isolation: generate in session A and review in session B. Never self-review when you need to avoid confirmation bias.</div>
+<div class="rule-card"><strong>R8:</strong> The Message Batches API offers 50% savings for non-urgent tasks when a 24-hour latency is acceptable.</div>
 </div></details>
-<details class="major domain-main" open><summary>Domain 4: Prompt Engineering &amp; Structured Output</summary><div class="major-body">
+<details class="major domain-cheat" open><summary>Domain 4: Prompt Engineering &amp; Structured Output</summary><div class="major-body">
 <div class="golden-label">The Golden Rules:</div>
-<div class="rule-card">R1: Explicit Criteria: Instruction must be specific and measurable, not vague(find long functions…) and subjective.</div>
-<div class="rule-card">R2: Few-Shot examples: Provide 2-4 high-quality examples, including at least one edge case. 7+ bloat alert.</div>
-<div class="rule-card">R3: tool_use guarantees structural correctnesss (correct json format, correct fields…), not semantic correctness, not the content inside the structured output.</div>
-<div class="rule-card">R4: Force specific tool: use ‘tool_choice’:{type:tool, name:’X’} to guarantee a specific tool used for a task.</div>
-<div class="rule-card">R5: Specific Retry: when a task fails, append specific error message to the prompt before retrying.</div>
-<div class="rule-card">R6: MultiPass Strategy: Pass 1 - Analyze files individually. Pass 2 - Analyze cross-file interactions.</div>
-<div class="rule-card">R7: Seperete Sessions: Generate a session A and review it in a separate session B. Never self-review to avoid confirmation bias.</div>
+<div class="rule-card"><strong>R1:</strong> Explicit criteria must be specific and measurable, rather than vague or subjective.</div>
+<div class="rule-card"><strong>R2:</strong> Few-shot examples: provide 2–4 high-quality examples, including at least one edge case. Seven or more can bloat the prompt.</div>
+<div class="rule-card"><strong>R3:</strong> <code>tool_use</code> guarantees structural correctness, such as valid JSON and fields, but does not guarantee semantic correctness.</div>
+<div class="rule-card"><strong>R4:</strong> To force a specific tool, use <code>tool_choice: {"type":"tool","name":"X"}</code>.</div>
+<div class="rule-card"><strong>R5:</strong> Specific retry: when a task fails, append a specific error message to the prompt before retrying.</div>
+<div class="rule-card"><strong>R6:</strong> Multi-pass strategy: Pass 1 analyzes files individually; Pass 2 analyzes cross-file interactions.</div>
+<div class="rule-card"><strong>R7:</strong> Separate sessions: generate in session A and review in session B. Never self-review when you need to avoid confirmation bias.</div>
 </div></details>
-<details class="major domain-main" open><summary>Domain 5: Context Management &amp; Reliability</summary><div class="major-body">
+<details class="major domain-cheat" open><summary>Domain 5: Context Management &amp; Reliability</summary><div class="major-body">
 <div class="golden-label">The Golden Rules:</div>
-<div class="rule-card">R1: Case Facts are immutable blocks at the start of the context. Never summarize them. Preserves critical details.</div>
-<div class="rule-card">R2: LLMs often have lost in the middle problem. They pay the most attention to the beginning and the end of the conversation. So you put your most critical info at those spots. For really long context, use tools like @compact tag or even break tasks down for specialized subagents.</div>
-<div class="rule-card">R3: You don’t escalate to humans for customers’ feelings (like a customer is angry) or models’ reported low confidence report.</div>
-<div class="rule-card">R4: Stratified Metrics: Track accuracy per document type. Aggregate metrics can mask critical per-category failures.</div>
-<div class="rule-card">R5: when system have conflict information (for example: from subagents): verified &gt; extracted &gt; inferred &gt; estimated. Always log the conflict.</div>
+<div class="rule-card"><strong>R1:</strong> Case facts are immutable blocks at the start of the context. Never summarize them; this preserves critical details.</div>
+<div class="rule-card"><strong>R2:</strong> LLMs often have a “lost in the middle” problem. Put critical information at the beginning or end. For very long contexts, use <code>/compact</code> or delegate focused tasks to subagents.</div>
+<div class="rule-card"><strong>R3:</strong> Do not escalate based only on customer sentiment or a model’s self-reported low confidence.</div>
+<div class="rule-card"><strong>R4:</strong> Stratified metrics: track accuracy per document type because aggregate metrics can mask category-specific failures.</div>
+<div class="rule-card"><strong>R5:</strong> When information conflicts, use this hierarchy: verified → extracted → inferred → estimated. Always log the conflict.</div>
 </div></details>
 <details class="major domain-quiz" open>
 <summary>Quizzes</summary>
