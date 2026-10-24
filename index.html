@@ -99,6 +99,8 @@ button:focus-visible, summary:focus-visible {
   letter-spacing:-.025em;
 }
 .cheat-heading { color:var(--gold); }
+.quiz-heading { color:var(--quiz); }
+.exam-heading { color:#ffb86b; }
 
 details {
   border:1px solid var(--border);
@@ -270,7 +272,7 @@ code {
 }
 
 .exam1-section{
-  margin-top:46px;
+  margin-top:14px;
 }
 .exam1-section > summary{
   color:#ffb86b;
@@ -522,8 +524,9 @@ code {
 <div class="rule-card"><strong>R4:</strong> Stratified metrics: track accuracy per document type because aggregate metrics can mask category-specific failures.</div>
 <div class="rule-card"><strong>R5:</strong> When information conflicts, use this hierarchy: verified → extracted → inferred → estimated. Always log the conflict.</div>
 </div></details>
+<h2 class="section-heading quiz-heading">Quizzes</h2>
 <details class="major domain-quiz" open>
-<summary>Quizzes</summary>
+<summary>Review Questions</summary>
 <div class="major-body">
 <details class="topic quiz-topic" open><summary>1. PreToolUse Hooks – Regex Matching</summary><div class="topic-body">
 <div class="regular-line">Regex matchers without anchors (e.g., /refund/) match any tool name containing the substring, including issue_refund_note. Use ^ and $ for exact matching (/^refund$/) or a literal matcher (refund) to target only the intended tool.</div>
@@ -588,6 +591,7 @@ code {
 </div>
 </details>
 
+<h2 class="section-heading exam-heading">Practice Exams</h2>
 <details class="major exam1-section" open>
 <summary>Exam 1 · Practice date: October 12, 2026 at 04:04 PM</summary>
 <div class="major-body">
